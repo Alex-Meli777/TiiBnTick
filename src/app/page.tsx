@@ -21,12 +21,12 @@ import {
 } from '@heroicons/react/24/solid';
 import { supabase } from '@/lib/supabase';
 import { motion, AnimatePresence } from 'framer-motion';
-import SenderInfoStep from './(main)/expedition/_components/SenderInfoStep';
-import RecipientInfoStep from './(main)/expedition/_components/RecipientInfoStep';
-import PackageInfoStep from './(main)/expedition/_components/FormulaireColisExpedition';
-import RouteSelectionStep from './(main)/expedition/_components/RouteExpedition';
-import SignatureStep from './(main)/expedition/_components/SignatureStep';
-import PaymentStep from './(main)/expedition/_components/PaymentStepExpedition';
+import SenderInfoStep from '@/components/expedition/SenderInfoStep';
+import RecipientInfoStep from '@/components/expedition/RecipientInfoStep';
+import PackageInfoStep from '@/components/expedition/PackageRegistration';
+import RouteSelectionStep from '@/components/expedition/RouteExpedition';
+import SignatureStep from '@/components/expedition/SignatureStep';
+import PaymentStep from '@/components/expedition/PaymentStepExpedition';
 import NavbarHome from '@/components/NavbarHome';
 import { CheckCircleIcon, PrinterIcon } from '@heroicons/react/24/outline';
 import { UserPlusIcon } from 'lucide-react';

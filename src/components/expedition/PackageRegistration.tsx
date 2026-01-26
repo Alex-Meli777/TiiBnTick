@@ -1,9 +1,12 @@
+// File: src/components/expedition/PackageRegistration.tsx
 // Purpose:
-// Backwards-compatible re-export wrapper.
-// This preserves any imports targeting the previous path while the actual implementation
-// resides in src/components/expedition/PackageRegistration.tsx.
-// Replace/Remove this wrapper when all imports reference the new location.
-export { default } from '@/components/expedition/PackageRegistration';
+// - UI form for the expedition wizard to collect package details (designation,
+//   photo, weight, dimensions, fragility, insurance, perishable flag, etc).
+// - Computes any local estimates and emits the collected "allData" to the wizard.
+// - Client-only: handles file inputs, previews and uses browser APIs.
+// Migration note:
+// - Moved from src/app/(main)/expedition/_components/FormulaireColisExpedition.tsx
+// - Minimal changes applied: only top-level header and import adjustments if needed.
 
 import React, { useState, useEffect, useRef } from 'react';
 import { 

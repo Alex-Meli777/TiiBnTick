@@ -1,10 +1,14 @@
-'use client';
-
+// File: src/components/expedition/PaymentStep.tsx
 // Purpose:
-// Backwards-compatible re-export wrapper for PaymentStep.
-// Keep this file in place while migrating imports across the codebase.
-export { default } from '@/components/expedition/PaymentStep';
+// - Payment selection and final submission screen for the expedition flow.
+// - Handles payment method selection, mobile payment validation, calls
+//   packageService.createPackage(...) and shows success screen with trackingNumber.
+// - Generates a bordereau PDF for the created shipment.
+// Migration note:
+// - Moved from src/app/(main)/expedition/_components/PaymentStepExpedition.tsx
+// - Only minor robustification of trackingNumber extraction recommended below.
 
+'use client';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -347,14 +351,11 @@ export default function PaymentStep({ allData, onBack, onPaymentFinalized, curre
         
         console.log("✅ RÉPONSE BACKEND REÇUE :", response);
         
-        // Accept several backend shapes and fallback to a mock id for local dev
-const newTracking =
-  response?.trackingNumber ||
-  response?.tracking_number ||
-  response?.tracking ||
-  `MOCK-${Date.now()}`;
+        const newTracking = response.trackingNumber || (response as any).tracking_number;
+        
+        if (!newTracking) throw new Error("Numéro de suivi manquant dans la réponse backend.");
 
-setTrackingNumber(newTracking);
+        setTrackingNumber(newTracking);
         setPaymentSuccess(true);
         addNotification(`Colis créé ! Suivi : ${newTracking}`, 'success');
 
