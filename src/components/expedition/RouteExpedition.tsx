@@ -22,9 +22,12 @@ import { supabase } from '@/lib/supabase';
 import { relayPointService, RelayPoint } from '@/services/relayPointService';
 
 // Réutiliser vos données de points relais
-import yaoundePointsRelais, { PointRelais, YAOUNDE_CENTER } from './map/RelaisData';
+import yaoundePointsRelais, { PointRelais, YAOUNDE_CENTER } from '@/components/map/RelaisData';
+import { RouteData, RouteSelectionStepProps } from '@/types/package';
+import { calculateTravelPrice, haversineDistance } from '@/lib/utils';
 
-const MapComponent = dynamic(() => import('./map/MapComponent'), {
+
+const MapComponent = dynamic(() => import('@/components/map/MapComponent'), {
   ssr: false,
   loading: () => (
     <div className="h-full flex items-center justify-center bg-gradient-to-br from-orange-50 to-amber-50">
@@ -36,40 +39,6 @@ const MapComponent = dynamic(() => import('./map/MapComponent'), {
   ),
 });
 
-interface RouteData {
-  // Modification : Les IDs sont maintenant des string (UUID)
-  departurePointId: string | null;
-  arrivalPointId: string | null;
-  departurePointName: string;
-  arrivalPointName: string;
-  distanceKm: number;
-}
-
-interface RouteSelectionStepProps {
-  onContinue: (data: RouteData, travelPrice: number) => void;
-  onBack: () => void;
-}
-
-// Calcul du prix du trajet
-const calculateTravelPrice = (distance: number) => {
-  if (distance <= 0) return 0;
-  const baseFee = 500; // 500 FCFA
-  const pricePerKm = 80; // 80 FCFA par km
-  return Math.round(baseFee + distance * pricePerKm);
-};
-
-// Fonction de calcul de distance (Haversine)
-const haversineDistance = ([lat1, lon1]: [number, number], [lat2, lon2]: [number, number]): number => {
-  const toRad = (x: number) => x * Math.PI / 180;
-  const R = 6371; // Rayon de la Terre en km
-  const dLat = toRad(lat2 - lat1);
-  const dLon = toRad(lon2 - lon1);
-  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
-    Math.sin(dLon / 2) * Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c;
-};
 
 export default function RouteSelectionStep({ onContinue, onBack }: RouteSelectionStepProps) {
   const [selectionMode, setSelectionMode] = useState<'origin' | 'destination'>('origin');

@@ -1,12 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-
-interface MapComponentProps {
-    initialCenter: [number, number];
-    initialZoom: number;
-    onMapReady: (map: maplibregl.Map) => void;
-}
+import { MapComponentProps } from '@/types/package';
 
 const MapComponent = ({ initialCenter, initialZoom, onMapReady }: MapComponentProps) => {
     const mapContainer = useRef<HTMLDivElement>(null);

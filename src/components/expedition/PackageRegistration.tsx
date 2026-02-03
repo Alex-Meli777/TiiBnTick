@@ -30,31 +30,7 @@ import {
   MdDeliveryDining
 } from 'react-icons/md';
 
-// --- Interface de Données Corrigée ---
-interface PackageData {
-  photo: File | string | null; // MODIFICATION ICI: Accept string for URL/Base64
-  designation: string;
-  description: string;
-  weight: string;
-  length: string;
-  width: string;
-  height: string;
-  isFragile: boolean;
-  isPerishable: boolean;
-  isLiquid: boolean;
-  isInsured: boolean;
-  declaredValue: string;
-  transportMethod: 'truck' | 'tricycle' | 'moto' | 'bike' | 'car' | ''; // << CORRIGÉ: Renommage de 'logistics'
-  logistics: 'standard' | 'express_48h' | 'express_24h';              // << CORRIGÉ: Nouvelle propriété pour la vitesse
-  pickup: boolean;
-  delivery: boolean;
-}
-
-interface PackageRegistrationProps {
-  initialData?: Partial<PackageData>;
-  onContinue: (data: PackageData, totalPrice: number) => void;
-  onBack?: () => void;
-}
+import { PackageData,PackageRegistrationProps } from '@/types/package';
 
 const LoadingDots = () => (
   <div className="flex space-x-1">

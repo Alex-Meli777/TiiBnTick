@@ -1,30 +1,22 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { AuthProvider } from "@/context/AuthContext";
-import { NotificationProvider } from "@/context/NotificationContext";
+/**
+ * @file app/layout.tsx
+ * @description The ONLY place where <html> and <body> should exist.
+ */
+import '@/app/globals.css';
+import { AuthProvider } from '@/context/AuthContext';
+import { NotificationProvider } from '@/context/NotificationContext';
 
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-    title: "Interface Expedition",
-    description: "Application d'expédition de colis",
-};
-
-export default function RootLayout({
-    children,
-}: Readonly<{
-    children: React.ReactNode;
-}>) {
-    return (
-        <html lang="fr">
-            <body className={inter.className}>
-                <AuthProvider>
-                    <NotificationProvider>
-                        {children}
-                    </NotificationProvider>
-                </AuthProvider>
-            </body>
-        </html>
-    );
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="fr">
+      <body>
+        <AuthProvider>
+          <NotificationProvider>
+            {/* Navbar is optional here, depending on if you want it on every page */}
+            {children}
+          </NotificationProvider>
+        </AuthProvider>
+      </body>
+    </html>
+  );
 }
